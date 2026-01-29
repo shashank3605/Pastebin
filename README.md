@@ -1,16 +1,101 @@
-# React + Vite
+# Pastebin-Lite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Pastebin-Lite is a simple web application that allows users to create text pastes and share them using a unique URL.  
+Each paste can optionally expire after a certain time (TTL) or after a limited number of views.
 
-Currently, two official plugins are available:
+This project is built as part of a take-home assignment and is designed to work reliably in a serverless environment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Deployed URL:  
+https://pastebin3600.vercel.app/
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Create a paste with arbitrary text
+- Generate a shareable link for each paste
+- View pastes via API or browser
+- Optional constraints:
+  - Time-based expiry (TTL)
+  - Maximum view count
+- Safe rendering of paste content
+- Deterministic time support for automated testing
+
+---
+
+## Tech Stack
+
+- Framework: Node.js / Next.js
+- Database: MongoDB
+- Deployment: Vercel
+
+---
+
+## Persistence Layer
+
+This project uses **MongoDB** as the persistence layer.
+
+MongoDB was chosen because:
+- It persists data across serverless requests
+- It supports flexible schemas for optional fields (TTL, max views)
+- It works well with managed cloud services like MongoDB Atlas
+
+Each paste is stored with:
+- Content
+- Creation timestamp
+- Optional expiration timestamp
+- Optional maximum views
+- Current view count
+
+No manual database migrations or shell access are required at runtime.
+
+---
+
+## Running the Project Locally
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/pastebin-lite.git
+cd pastebin-lite
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+3. Set environment variables
+
+Create a .env.local file in the project root:```bash
+MONGODB_URI=your_mongodb_connection_string
+
+
+
+### 4. Start the development server
+```bash
+npm run dev
+```
+
+### 5. Access the application
+Open your browser and navigate to `http://localhost:your_port` to access the application.
+
+---
+
+## API Endpoints
+
+Health Check
+GET /api/healthz
+
+Create a Paste
+POST /api/pastes
+
+
+Fetch a Paste (API)
+GET /api/pastes/:id
+
+
+View a Paste (HTML)
+GET /p/:id
