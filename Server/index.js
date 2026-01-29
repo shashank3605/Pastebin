@@ -15,7 +15,13 @@ const PORT = process.env.PORT || 3000;
 await connectDB();
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:4000" }));
+app.use(
+  cors({
+    origin: ["http://localhost:4000", "https://pastebin-20pv.onrender.com"],
+  })
+);
+
+// app.use(cors({ origin: "http://localhost:4000" }));
 
 app.get("/api/healthz", async (req, res) => {
   try {
@@ -24,6 +30,9 @@ app.get("/api/healthz", async (req, res) => {
   } catch {
     res.status(200).json({ ok: false });
   }
+});
+app.get("/", (req, res) => {
+  res.send("Backend is running ");
 });
 
 app.get("/p/:id", async (req, res) => {

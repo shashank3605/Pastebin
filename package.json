@@ -8,8 +8,11 @@
     "dev:frontend": "vite",
     "dev:backend": "npm run dev --prefix server",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build:server": "npm run build --prefix server",
+    "build:all": "npm run build && npm run build:server",
+    "preview": "vite preview",
+    "start": "npm start --prefix server",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",

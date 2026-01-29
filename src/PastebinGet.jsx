@@ -22,7 +22,11 @@ export default function PastebinGet() {
       setData(null);
 
       try {
-        const res = await fetch(`/api/pastes/${pid}`);
+        const API = import.meta.env.VITE_API_URL;
+        if (!API) throw new Error("VITE_API_URL is not set");
+
+        const res = await fetch(`${API}/api/pastes/${pid}`);
+        // const res = await fetch(`/api/pastes/${pid}`);
 
         if (res.status === 404) {
           setError("Paste not available (404).");
