@@ -99,3 +99,13 @@ GET /api/pastes/:id
 
 View a Paste (HTML)
 GET /p/:id
+
+
+## Important Design Decisions
+
+- MongoDB is used to ensure data persistence across serverless requests
+- No in-memory global state is used to maintain serverless compatibility
+- Atomic database updates prevent race conditions on view limits
+- TTL and view-count constraints are enforced strictly
+- Paste content is rendered safely to prevent script execution
+- Deterministic time testing is supported using request headers when `TEST_MODE=1`
